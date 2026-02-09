@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Crafts Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-theme">
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <i class="fas fa-moon theme-icon"></i>
+    </div>
+
+    <!-- Login/Register Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Welcome to Code Crafts Academy</h2>
+                <button class="close-btn" id="closeAuthModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+                
+                <form id="loginForm" class="auth-form active">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="loginUsername" placeholder="Enter your username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn-submit">Login</button>
+                    <p class="auth-link">Don't have an account? <a href="#" id="showRegister">Register here</a></p>
+                </form>
+                
+                <form id="registerForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="regUsername">Username</label>
+                        <input type="text" id="regUsername" placeholder="Choose a username" required>
+                        <div class="error-message" id="usernameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" placeholder="Create a strong password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+                        <div class="error-message" id="passwordError"></div>
+                    </div>
+                    <button type="submit" class="btn-submit">Create Account</button>
+                    <p class="auth-link">Already have an account? <a href="#" id="showLogin">Login here</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content success-modal">
+            <div class="modal-header">
+                <h2>Success!</h2>
+                <button class="close-btn" id="closeSuccessModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <p id="successMessage">Operation completed successfully!</p>
+                <button class="btn-ok" id="okSuccessBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1><i class="fas fa-code"></i> Code Crafts</h1>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <div class="user-info" id="userInfo">
+                <div class="user-avatar">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <div class="user-details">
+                    <h3 id="currentUser">Guest</h3>
+                    <p>Student</p>
+                </div>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#home" class="nav-link active" data-page="home">
+                            <i class="fas fa-home"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#courses" class="nav-link" data-page="courses">
+                            <i class="fas fa-book-open"></i>
+                            <span>Courses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#dashboard" class="nav-link" data-page="dashboard">
+                            <i class="fas fa-chart-line"></i>
+                            <span>My Learning</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#profile" class="nav-link" data-page="profile">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>Student Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="nav-link" data-page="contact">
+                            <i class="fas fa-envelope"></i>
+                            <span>Contact Us</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#about" class="nav-link" data-page="about">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <p>&copy; 2023 Code Crafts Academy</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Home Page -->
+            <div class="page active" id="homePage">
+                <div class="hero-section">
+                    <h1 class="hero-title">Code Crafts Academy</h1>
+                    <p class="hero-subtitle">Master the Art of Programming</p>
+                    <div class="quote-box">
+                        <i class="fas fa-quote-left"></i>
+                        <p class="quote">"The only way to learn a new programming language is by writing programs in it."</p>
+                        <p class="quote-author">- Dennis Ritchie</p>
+                    </div>
+                    <button class="hero-btn" id="startLearningBtn">Start Learning Today</button>
+                </div>
+                
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Hands-on Projects</h3>
+                        <p>Learn by building real-world applications with guided projects.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Expert Instructors</h3>
+                        <p>Get mentored by industry professionals with years of experience.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>Certifications</h3>
+                        <p>Earn recognized certificates to boost your career prospects.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Courses Page -->
+            <div class="page" id="coursesPage">
+                <h2 class="page-title">Our Courses</h2>
+                <p class="page-subtitle">Select from our wide range of programming courses</p>
+                
+                <div class="courses-container" id="coursesContainer">
+                    <!-- Courses will be loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Dashboard Page -->
+            <div class="page" id="dashboardPage">
+                <h2 class="page-title">My Learning Dashboard</h2>
+                
+                <div class="dashboard-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon enrolled">
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="enrolledCount">0</h3>
+                            <p>Courses Enrolled</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon completed">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="completedCount">0</h3>
+                            <p>Courses Completed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon progress">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="progressPercent">0%</h3>
+                            <p>Learning Progress</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-sections">
+                    <div class="section">
+                        <h3><i class="fas fa-list-alt"></i> Registered Courses</h3>
+                        <div class="courses-list" id="registeredCourses">
+                            <p class="empty-message">No courses registered yet. <a href="#courses">Browse courses</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3><i class="fas fa-trophy"></i> Completed Courses</h3>
+                        <div class="courses-list" id="completedCourses">
+                            <p class="empty-message">No courses completed yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Page -->
+            <div class="page" id="profilePage">
+                <h2 class="page-title">Student Profile</h2>
+                
+                <div class="profile-container">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="profile-info">
+                                <h3 id="profileUsername">Guest User</h3>
+                                <p>Student at Code Crafts Academy</p>
+                                <div class="profile-badge">
+                                    <i class="fas fa-star"></i>
+                                    <span>Beginner Level</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-details">
+                            <h4>Account Information</h4>
+                            <div class="info-row">
+                                <span class="info-label">Member Since:</span>
+                                <span class="info-value" id="memberSince">Not available</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Last Login:</span>
+                                <span class="info-value" id="lastLogin">Not available</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Learning Streak:</span>
+                                <span class="info-value">0 days</span>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-actions">
+                            <button class="profile-btn" id="editProfileBtn">
+                                <i class="fas fa-edit"></i> Edit Profile
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <h3>Learning Progress</h3>
+                        <div class="progress-chart">
+                            <div class="progress-circle">
+                                <div class="circle" id="progressCircle">
+                                    <span id="progressText">0%</span>
+                                </div>
+                            </div>
+                            <div class="progress-stats">
+                                <div class="progress-stat">
+                                    <h4>Enrolled</h4>
+                                    <p id="statEnrolled">0 courses</p>
+                                </div>
+                                <div class="progress-stat">
+                                    <h4>Completed</h4>
+                                    <p id="statCompleted">0 courses</p>
+                                </div>
+                                <div class="progress-stat">
+                                    <h4>In Progress</h4>
+                                    <p id="statInProgress">0 courses</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div class="page" id="contactPage">
+                <h2 class="page-title">Contact Us</h2>
+                
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Our Location</h4>
+                                <p>123 Tech Street, Silicon Valley, CA 94000</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Phone Number</h4>
+                                <p>+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email Address</h4>
+                                <p>info@codecraftsacademy.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Working Hours</h4>
+                                <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>Send us a Message</h3>
+                        <form id="messageForm">
+                            <div class="form-group">
+                                <input type="text" placeholder="Your Name" id="contactName" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" placeholder="Your Email" id="contactEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea placeholder="Your Message" id="contactMessage" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Page -->
+            <div class="page" id="aboutPage">
+                <h2 class="page-title">About Code Crafts Academy</h2>
+                
+                <div class="about-content">
+                    <div class="about-section">
+                        <h3><i class="fas fa-rocket"></i> Our Mission</h3>
+                        <p>At Code Crafts Academy, our mission is to democratize coding education and empower individuals with the skills needed to thrive in the digital economy. We believe that anyone, regardless of background, can learn to code and build amazing things.</p>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h3><i class="fas fa-history"></i> Our Story</h3>
+                        <p>Founded in 2020 by a team of software engineers and educators, Code Crafts Academy started as a small community initiative to teach coding to underprivileged youth. Today, we've grown into a premier online learning platform serving thousands of students worldwide.</p>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h3><i class="fas fa-chart-line"></i> Our Impact</h3>
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <h4>10,000+</h4>
+                                <p>Students Trained</p>
+                            </div>
+                            <div class="stat-box">
+                                <h4>50+</h4>
+                                <p>Expert Instructors</p>
+                            </div>
+                            <div class="stat-box">
+                                <h4>95%</h4>
+                                <p>Completion Rate</p>
+                            </div>
+                            <div class="stat-box">
+                                <h4>30+</h4>
+                                <p>Countries Reached</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h3><i class="fas fa-handshake"></i> Our Promise</h3>
+                        <p>We are committed to providing high-quality, affordable coding education that prepares our students for real-world challenges. Our project-based curriculum ensures that you not only learn theory but also gain practical experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
