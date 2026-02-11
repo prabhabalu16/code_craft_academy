@@ -1,0 +1,2884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Craft Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7B68EE;
+            --secondary: #FF6B8B;
+            --accent: #20B2AA;
+            --light: #F9F7FE;
+            --dark: #2D1B69;
+            --success: #4ECDC4;
+            --warning: #FFD166;
+            --gradient: linear-gradient(135deg, #7B68EE 0%, #20B2AA 100%);
+            --gradient-2: linear-gradient(135deg, #FF6B8B 0%, #FFD166 100%);
+            --card-bg: #ffffff;
+            --text-primary: #333344;
+            --text-secondary: #666677;
+            --border-color: #E6E6FA;
+            --sidebar-bg: #2D1B69;
+            --header-bg: #ffffff;
+            --shadow: rgba(123, 104, 238, 0.15);
+        }
+
+        .dark-theme {
+            --light: #1A1A2E;
+            --dark: #F8F9FA;
+            --card-bg: #2D1B69;
+            --text-primary: #E6E6FA;
+            --text-secondary: #B8B8FF;
+            --border-color: #4A3B8C;
+            --sidebar-bg: #1A1A2E;
+            --header-bg: #2D1B69;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--light);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            overflow-x: hidden;
+        }
+
+        /* Beautiful Header with Logo */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: var(--gradient);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(123, 104, 238, 0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 32px;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 32px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo-text span {
+            color: #FFD166;
+        }
+
+        /* User Actions in Header */
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .auth-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .auth-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 60px;
+            height: 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+            backdrop-filter: blur(10px);
+        }
+
+        .theme-toggle i {
+            color: white;
+            font-size: 14px;
+        }
+
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            left: 3px;
+            transition: transform 0.3s;
+        }
+
+        .dark-theme .theme-toggle::after {
+            transform: translateX(30px);
+        }
+
+        /* Vertical Navigation */
+        .vertical-nav {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            padding: 100px 30px 30px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            box-shadow: 5px 0 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+
+        .nav-links li {
+            margin-bottom: 10px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 18px 25px;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            font-weight: 500;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--gradient);
+            color: white;
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.3);
+        }
+
+        .nav-links i {
+            font-size: 22px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 100px 40px 40px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        /* Home Page */
+        .hero {
+            text-align: center;
+            padding: 80px 40px;
+            background: var(--gradient);
+            border-radius: 30px;
+            color: white;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 40px rgba(123, 104, 238, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 56px;
+            margin-bottom: 30px;
+            font-weight: 800;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero .quote {
+            font-size: 28px;
+            font-style: italic;
+            margin-bottom: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            position: relative;
+            font-family: 'Raleway', serif;
+        }
+
+        .quote-author {
+            font-size: 22px;
+            opacity: 0.9;
+        }
+
+        .registration-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 20px 50px;
+            font-size: 22px;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .registration-btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal - SCROLLABLE VERSION */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 50px;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            position: relative;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            animation: modalAppear 0.4s ease-out;
+            overflow-y: auto;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 32px;
+            cursor: pointer;
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            background-color: var(--border-color);
+            transform: rotate(90deg);
+        }
+
+        .modal h2 {
+            margin-bottom: 30px;
+            color: var(--primary);
+            text-align: center;
+            font-size: 32px;
+            font-family: 'Montserrat', sans-serif;
+            position: sticky;
+            top: 0;
+            background: var(--card-bg);
+            padding: 20px 0;
+            z-index: 5;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 15px;
+            background-color: var(--card-bg);
+            color: var(--text-primary);
+            font-size: 16px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(123, 104, 238, 0.1);
+        }
+
+        .guest-btn, .submit-btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .guest-btn {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .guest-btn:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .submit-btn {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+
+        .switch-form {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--text-secondary);
+            padding: 15px 0;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .switch-form a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .switch-form a:hover {
+            border-bottom-color: var(--primary);
+        }
+
+        /* Courses Page */
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            margin-bottom: 40px;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100px;
+            height: 5px;
+            background: var(--gradient);
+            border-radius: 5px;
+        }
+
+        .courses-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .course-card {
+            background-color: var(--card-bg);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 15px 35px var(--shadow);
+            transition: transform 0.3s;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .course-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(123, 104, 238, 0.2);
+        }
+
+        .course-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .course-card h3 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .course-card p {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            line-height: 1.7;
+            font-size: 17px;
+        }
+
+        .course-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .register-btn {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .details-btn {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
+
+        .continue-btn {
+            background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+            color: white;
+        }
+
+        /* Course Details Modal */
+        .course-details {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .course-details h3 {
+            margin: 20px 0 15px;
+            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Course Learning Page */
+        .course-learning-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--light);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .course-header {
+            background: var(--gradient);
+            padding: 30px 40px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .close-course {
+            font-size: 32px;
+            cursor: pointer;
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .close-course:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .learning-content {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .learning-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 35px var(--shadow);
+            border-left: 8px solid var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .section-card h3 {
+            margin-bottom: 25px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+        }
+
+        .section-card.basic {
+            border-left-color: #4ECDC4;
+        }
+
+        .section-card.medium {
+            border-left-color: #FFD166;
+        }
+
+        .section-card.advanced {
+            border-left-color: #FF6B8B;
+        }
+
+        .section-content {
+            line-height: 1.9;
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background-color: var(--card-bg);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 40px var(--shadow);
+            margin-top: 40px;
+        }
+
+        .quiz-container h3 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question p {
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 20px;
+            color: var(--text-primary);
+        }
+
+        .option {
+            margin-bottom: 15px;
+        }
+
+        .option label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 15px;
+            transition: background-color 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .option label:hover {
+            background-color: var(--border-color);
+            border-color: var(--primary);
+        }
+
+        .option input {
+            width: 20px;
+            height: 20px;
+        }
+
+        .submit-quiz {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 30px;
+            display: block;
+            margin-left: auto;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .submit-quiz:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow);
+        }
+
+        /* Personal Dashboard */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .dashboard-card {
+            background-color: var(--card-bg);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+
+        .dashboard-card h3 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+        }
+
+        .profile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        .info-item {
+            margin-bottom: 20px;
+        }
+
+        .info-item label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .info-item span {
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 18px;
+            padding: 12px 20px;
+            background: var(--border-color);
+            border-radius: 15px;
+            display: block;
+        }
+
+        .edit-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            margin-top: 30px;
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .edit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--shadow);
+        }
+
+        /* Courses Columns */
+        .courses-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .course-column {
+            background: var(--border-color);
+            border-radius: 20px;
+            padding: 25px;
+            min-height: 300px;
+        }
+
+        .course-column h4 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 22px;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .course-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .course-list li {
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            background-color: var(--card-bg);
+            transition: transform 0.3s;
+        }
+
+        .course-list li:hover {
+            transform: translateX(10px);
+        }
+
+        .course-status {
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .registered {
+            background-color: rgba(255, 209, 102, 0.2);
+            color: #FFA500;
+        }
+
+        .completed {
+            background-color: rgba(78, 205, 196, 0.2);
+            color: #4ECDC4;
+        }
+
+        /* About and Contact */
+        .about-container, .contact-container {
+            background-color: var(--card-bg);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 40px var(--shadow);
+        }
+
+        .about-container h2, .contact-container h2 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .about-content p {
+            margin-bottom: 25px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+            font-size: 18px;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            margin-bottom: 10px;
+            color: var(--text-primary);
+            font-size: 22px;
+        }
+
+        .contact-details p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Welcome User */
+        .welcome-user {
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .logout-btn {
+            background: rgba(255, 107, 139, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255, 107, 139, 1);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .vertical-nav {
+                width: 250px;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+            .courses-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .vertical-nav {
+                display: none;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 120px 20px 40px;
+            }
+            .main-header {
+                padding: 15px 20px;
+            }
+            .hero h1 {
+                font-size: 40px;
+            }
+            .hero .quote {
+                font-size: 22px;
+            }
+            .courses-container {
+                grid-template-columns: 1fr;
+            }
+            .profile-info {
+                grid-template-columns: 1fr;
+            }
+            .modal-content {
+                padding: 30px 20px;
+                max-height: 85vh;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 24px;
+            }
+            .logo-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .hero .quote {
+                font-size: 18px;
+            }
+            .registration-btn {
+                padding: 15px 30px;
+                font-size: 18px;
+            }
+            .page-title {
+                font-size: 32px;
+            }
+            .user-actions {
+                gap: 10px;
+            }
+            .auth-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <div class="logo-text">Code<span>Craft</span> Academy</div>
+        </div>
+        
+        <div class="user-actions">
+            <div id="userWelcome" class="welcome-user" style="display: none;">
+                <i class="fas fa-user"></i>
+                <span id="userName">Welcome</span>
+                <button class="logout-btn" id="logoutBtn">Logout</button>
+            </div>
+            <button class="auth-btn" id="loginBtn">Login / Signup</button>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Vertical Navigation -->
+    <nav class="vertical-nav">
+        <ul class="nav-links">
+            <li><a href="#" class="active" data-page="home"><i class="fas fa-home"></i> HOME</a></li>
+            <li><a href="#" data-page="courses"><i class="fas fa-graduation-cap"></i> COURSES</a></li>
+            <li><a href="#" data-page="personal"><i class="fas fa-user-circle"></i> PERSONAL DETAILS</a></li>
+            <li><a href="#" data-page="about"><i class="fas fa-building"></i> ABOUT THE COMPANY</a></li>
+            <li><a href="#" data-page="contact"><i class="fas fa-address-book"></i> CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Home Content -->
+        <div id="home-content" class="page-content">
+            <div class="hero">
+                <h1>Master The Art of Coding</h1>
+                <p class="quote">"The important thing is not to stop questioning. Curiosity has its own reason for existing."</p>
+                <p class="quote-author">- Albert Einstein</p>
+                <button class="registration-btn" id="openRegistration">
+                    <i class="fas fa-rocket"></i> Start Learning For Free
+                </button>
+            </div>
+            
+            <div class="features">
+                <h2 class="page-title">Why Choose Code Craft Academy?</h2>
+                <div class="courses-container">
+                    <div class="course-card">
+                        <div class="course-icon" style="background: var(--gradient);">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Expert-Led Courses</h3>
+                        <p>Learn from industry professionals with real-world experience. Our instructors are passionate about teaching and mentoring the next generation of developers.</p>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-icon" style="background: var(--gradient-2);">
+                            <i class="fas fa-hands-helping"></i>
+                        </div>
+                        <h3>Project-Based Learning</h3>
+                        <p>Build real-world projects that will enhance your portfolio. We believe in learning by doing, not just watching.</p>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-icon" style="background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>Community Support</h3>
+                        <p>Join a vibrant community of learners. Collaborate on projects, participate in code reviews, and network with peers and mentors.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Content -->
+        <div id="courses-content" class="page-content" style="display: none;">
+            <h2 class="page-title">Our Free Courses</h2>
+            <div class="courses-container" id="coursesList">
+                <!-- Courses will be dynamically loaded here -->
+            </div>
+        </div>
+
+        <!-- Personal Dashboard Content -->
+        <div id="personal-content" class="page-content" style="display: none;">
+            <h2 class="page-title">Personal Dashboard</h2>
+            <div class="dashboard-container">
+                <div class="dashboard-card">
+                    <h3><i class="fas fa-user"></i> Profile Information</h3>
+                    <div class="profile-info" id="profileInfo">
+                        <!-- Profile info will be loaded here -->
+                    </div>
+                    <button class="edit-btn" id="editProfileBtn"><i class="fas fa-edit"></i> Edit Profile</button>
+                </div>
+                <div class="dashboard-card">
+                    <h3><i class="fas fa-book-open"></i> My Learning Progress</h3>
+                    <div class="courses-columns">
+                        <div class="course-column">
+                            <h4><i class="fas fa-bookmark"></i> Registered Courses</h4>
+                            <ul class="course-list" id="registeredCourses">
+                                <!-- Registered courses will be loaded here -->
+                            </ul>
+                        </div>
+                        <div class="course-column">
+                            <h4><i class="fas fa-check-circle"></i> Completed Courses</h4>
+                            <ul class="course-list" id="completedCourses">
+                                <!-- Completed courses will be loaded here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Content -->
+        <div id="about-content" class="page-content" style="display: none;">
+            <div class="about-container">
+                <h2>About Code Craft Academy</h2>
+                <div class="about-content">
+                    <p>Welcome to <strong>Code Craft Academy</strong>, where we transform coding enthusiasts into professional developers. Founded in 2018, we've helped over 50,000 students worldwide launch their tech careers.</p>
+                    <p>Our mission is simple: make high-quality coding education accessible to everyone. We believe that anyone can learn to code with the right guidance, resources, and community support.</p>
+                    <p>What sets us apart is our hands-on approach to learning. We don't just teach theory - we guide you through building real projects that you can add to your portfolio and show to potential employers.</p>
+                    <h3 style="margin-top: 40px; color: var(--primary); font-family: 'Montserrat', sans-serif;">Our Teaching Philosophy</h3>
+                    <ul style="color: var(--text-secondary); line-height: 1.9; margin-left: 20px; font-size: 18px;">
+                        <li><strong>Learn by Doing:</strong> 80% of your time will be spent coding, not watching</li>
+                        <li><strong>Project-Based:</strong> Every course includes multiple real-world projects</li>
+                        <li><strong>Community-First:</strong> Learn with peers, not in isolation</li>
+                        <li><strong>Career-Focused:</strong> Skills that employers actually want</li>
+                        <li><strong>Lifetime Access:</strong> Learn at your own pace, forever</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Content -->
+        <div id="contact-content" class="page-content" style="display: none;">
+            <div class="contact-container">
+                <h2>Contact Us</h2>
+                <p style="margin-bottom: 40px; color: var(--text-secondary); font-size: 18px;">Have questions? We'd love to hear from you! Reach out through any of these channels:</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Our Headquarters</h4>
+                            <p>123 Tech Avenue<br>San Francisco, CA 94107<br>United States</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Phone Support</h4>
+                            <p>+1 (555) 123-CODE<br>Monday - Friday: 9AM-6PM PST<br>Saturday: 10AM-4PM PST</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email Us</h4>
+                            <p>hello@codecraftacademy.com<br>support@codecraftacademy.com<br>careers@codecraftacademy.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Live Support</h4>
+                            <p>Chat with our team<br>24/7 Community Forum<br>Weekly Live Q&A Sessions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Registration/Login Modal - SCROLLABLE VERSION -->
+    <div class="modal" id="registrationModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">&times;</button>
+            <div id="registrationForm">
+                <h2>Join Code Craft Academy</h2>
+                <form id="signupForm">
+                    <div class="form-group">
+                        <label for="fullName"><i class="fas fa-user"></i> Full Name *</label>
+                        <input type="text" id="fullName" required placeholder="Enter your full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="username"><i class="fas fa-at"></i> Username *</label>
+                        <input type="text" id="username" required placeholder="Choose a unique username">
+                        <small style="color: var(--text-secondary); display: block; margin-top: 5px;">This will be your unique login ID</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> Password *</label>
+                        <input type="password" id="password" required placeholder="Create a strong password">
+                    </div>
+                    <div class="form-group">
+                        <label for="dob"><i class="fas fa-birthday-cake"></i> Date of Birth *</label>
+                        <input type="date" id="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="place"><i class="fas fa-map-marker-alt"></i> Place of Residence *</label>
+                        <input type="text" id="place" required placeholder="City, Country">
+                    </div>
+                    <div class="form-group">
+                        <label for="courseName"><i class="fas fa-graduation-cap"></i> Course Interest *</label>
+                        <input type="text" id="courseName" required placeholder="Enter the course you're interested in">
+                    </div>
+                    <div class="form-group">
+                        <label for="collegeName"><i class="fas fa-university"></i> College/University</label>
+                        <input type="text" id="collegeName" placeholder="Your institution name">
+                    </div>
+                    <div class="form-group">
+                        <label for="interests"><i class="fas fa-heart"></i> Areas of Interest</label>
+                        <input type="text" id="interests" placeholder="Web Dev, AI, Data Science, etc.">
+                    </div>
+                    <button type="submit" class="submit-btn">Create Account & Start Learning</button>
+                </form>
+                <div class="switch-form">
+                    <p>Already have an account? <a id="switchToLogin">Login here</a></p>
+                </div>
+                <button class="guest-btn" id="continueAsGuest"><i class="fas fa-user-clock"></i> Continue as Guest</button>
+            </div>
+            
+            <div id="loginForm" style="display: none;">
+                <h2>Welcome Back!</h2>
+                <form id="loginFormSubmit">
+                    <div class="form-group">
+                        <label for="loginUsername"><i class="fas fa-at"></i> Username</label>
+                        <input type="text" id="loginUsername" required placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="loginPassword" required placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="submit-btn">Login to Your Account</button>
+                </form>
+                <div class="switch-form">
+                    <p>New to Code Craft? <a id="switchToSignup">Create an account</a></p>
+                </div>
+                <button class="guest-btn" id="continueAsGuest2"><i class="fas fa-user-clock"></i> Continue as Guest</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Details Modal -->
+    <div class="modal" id="courseDetailsModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeDetailsModal">&times;</button>
+            <div id="courseDetailsContent"></div>
+        </div>
+    </div>
+
+    <!-- Course Learning Page -->
+    <div class="course-learning-modal" id="courseLearningModal">
+        <div class="course-header">
+            <h1 id="courseLearningTitle" style="font-size: 32px; margin: 0;">Course Learning</h1>
+            <button class="close-course" id="closeCourseModal">&times;</button>
+        </div>
+        <div class="learning-content" id="courseLearningContent">
+            <!-- Content will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeEditModal">&times;</button>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editFullName">Full Name</label>
+                    <input type="text" id="editFullName">
+                </div>
+                <div class="form-group">
+                    <label for="editDob">Date of Birth</label>
+                    <input type="date" id="editDob">
+                </div>
+                <div class="form-group">
+                    <label for="editPlace">Place of Residence</label>
+                    <input type="text" id="editPlace">
+                </div>
+                <div class="form-group">
+                    <label for="editCollegeName">College/University Name</label>
+                    <input type="text" id="editCollegeName">
+                </div>
+                <div class="form-group">
+                    <label for="editInterests">Areas of Interest</label>
+                    <input type="text" id="editInterests">
+                </div>
+                <button type="submit" class="submit-btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Sample Courses Data
+        const courses = [
+            {
+                id: 1,
+                title: "Web Development Fundamentals",
+                description: "Learn HTML, CSS, and JavaScript to build modern, responsive websites. Perfect for beginners starting their coding journey.",
+                icon: "fas fa-code",
+                color: "linear-gradient(135deg, #7B68EE 0%, #20B2AA 100%)",
+                basics: [
+                    "HTML is the standard markup language for creating web pages.",
+                    "HTML describes the structure of a web page using elements.",
+                    "HTML elements tell the browser how to display the content.",
+                    "CSS stands for Cascading Style Sheets.",
+                    "CSS describes how HTML elements are to be displayed on screen.",
+                    "CSS saves a lot of work by controlling layout of multiple pages.",
+                    "JavaScript is a programming language for the web.",
+                    "JavaScript can update and change both HTML and CSS.",
+                    "JavaScript can calculate, manipulate and validate data.",
+                    "HTML provides the structure of the page.",
+                    "CSS provides the visual styling of the page.",
+                    "JavaScript provides the interactive elements.",
+                    "All modern browsers support HTML5, CSS3, and ES6 JavaScript.",
+                    "Responsive design ensures websites work on all devices.",
+                    "Web standards are created by the World Wide Web Consortium.",
+                    "Semantic HTML helps with accessibility and SEO.",
+                    "CSS selectors are used to target HTML elements.",
+                    "CSS Box Model consists of margin, border, padding, and content.",
+                    "JavaScript runs on the client-side in the browser.",
+                    "Debugging tools are essential for web development."
+                ],
+                medium: [
+                    "DOM (Document Object Model) is a programming interface for HTML/XML documents.",
+                    "The DOM represents the document as a tree of objects.",
+                    "JavaScript can manipulate the DOM to create dynamic content.",
+                    "CSS Flexbox is a layout model for efficient arrangement of elements.",
+                    "Flexbox provides a more efficient way to layout, align and distribute space.",
+                    "CSS Grid Layout excels at dividing a page into major regions.",
+                    "Grid layout defines the relationship between parts of a control.",
+                    "Media queries allow for different styles for different devices.",
+                    "Responsive design uses flexible grids and layouts.",
+                    "JavaScript functions are blocks of code designed to perform a task.",
+                    "Functions are executed when invoked or called.",
+                    "Variables declared with 'let' and 'const' have block scope.",
+                    "Variables declared with 'var' have function scope.",
+                    "Arrow functions provide a shorter syntax for writing functions.",
+                    "Arrays are used to store multiple values in a single variable.",
+                    "Array methods like map, filter, and reduce are powerful tools.",
+                    "Objects in JavaScript are collections of key-value pairs.",
+                    "JSON (JavaScript Object Notation) is a lightweight data format.",
+                    "AJAX allows web pages to be updated asynchronously.",
+                    "Fetch API provides a modern interface for fetching resources.",
+                    "Promises represent the eventual completion of an asynchronous operation.",
+                    "Async/await makes asynchronous code look synchronous.",
+                    "Event handling allows JavaScript to respond to user actions.",
+                    "Form validation ensures user input is correct before submission.",
+                    "Local Storage allows storing data locally in the browser.",
+                    "Session Storage stores data for one session only.",
+                    "CSS preprocessors like Sass extend CSS functionality.",
+                    "CSS variables allow reusable values throughout stylesheets.",
+                    "CSS animations create movement and transitions.",
+                    "Web accessibility ensures websites are usable by everyone."
+                ],
+                advanced: [
+                    "React is a JavaScript library for building user interfaces.",
+                    "React uses a virtual DOM for efficient updates.",
+                    "Components are the building blocks of React applications.",
+                    "JSX allows writing HTML-like code in JavaScript.",
+                    "State in React represents the data that changes over time.",
+                    "Props are how components talk to each other in React.",
+                    "React Hooks allow using state and other features without classes.",
+                    "useState Hook lets you add React state to function components.",
+                    "useEffect Hook lets you perform side effects in function components.",
+                    "Context API provides a way to pass data through the component tree.",
+                    "React Router enables navigation between components.",
+                    "Redux is a predictable state container for JavaScript apps.",
+                    "Redux follows three principles: single source of truth, state is read-only, changes with pure functions.",
+                    "Middleware extends Redux with custom functionality.",
+                    "Next.js is a React framework for production applications.",
+                    "Server-side rendering improves performance and SEO.",
+                    "Static site generation pre-renders pages at build time.",
+                    "Webpack is a module bundler for JavaScript applications.",
+                    "Babel is a JavaScript compiler that converts modern JavaScript to older versions.",
+                    "TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.",
+                    "TypeScript adds static typing to JavaScript.",
+                    "GraphQL is a query language for APIs and a runtime for fulfilling queries.",
+                    "REST APIs are architectural style for designing networked applications.",
+                    "Authentication and authorization are crucial for secure applications.",
+                    "JWT (JSON Web Tokens) are used for secure transmission of information.",
+                    "OAuth is an open standard for access delegation.",
+                    "WebSockets enable real-time, bidirectional communication.",
+                    "Service Workers enable offline capabilities and push notifications.",
+                    "Progressive Web Apps (PWAs) combine web and mobile app features.",
+                    "WebAssembly allows running code written in multiple languages on the web.",
+                    "Performance optimization includes code splitting and lazy loading.",
+                    "Lighthouse is an automated tool for improving web page quality.",
+                    "Web security includes protecting against XSS and CSRF attacks.",
+                    "XSS (Cross-Site Scripting) involves injecting malicious scripts.",
+                    "CSRF (Cross-Site Request Forgery) tricks users into unwanted actions.",
+                    "Content Security Policy helps prevent XSS attacks.",
+                    "HTTP/2 improves performance over HTTP/1.1.",
+                    "Serverless architecture removes the need for server management.",
+                    "Microservices architecture structures an app as a collection of services.",
+                    "Docker containers package applications with all dependencies.",
+                    "CI/CD (Continuous Integration/Continuous Deployment) automates the software delivery process.",
+                    "Testing includes unit tests, integration tests, and end-to-end tests.",
+                    "Jest is a JavaScript testing framework.",
+                    "Cypress is an end-to-end testing framework.",
+                    "Webpack optimizes assets like JavaScript, CSS, and images.",
+                    "Code splitting improves initial load time of applications.",
+                    "Tree shaking eliminates dead code from bundles.",
+                    "Bundle analyzers help understand bundle composition."
+                ],
+                quiz: [
+                    {
+                        question: "What does HTML stand for?",
+                        options: [
+                            "Hyper Text Markup Language",
+                            "High Tech Modern Language",
+                            "Hyper Transfer Markup Language",
+                            "Home Tool Markup Language"
+                        ],
+                        correct: 0,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "Which CSS property is used to change the text color?",
+                        options: [
+                            "text-color",
+                            "font-color",
+                            "color",
+                            "text-style"
+                        ],
+                        correct: 2,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "What does DOM stand for in web development?",
+                        options: [
+                            "Document Object Model",
+                            "Data Object Management",
+                            "Digital Output Method",
+                            "Document Order Model"
+                        ],
+                        correct: 0,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "Which JavaScript method is used to add an element to the end of an array?",
+                        options: [
+                            "push()",
+                            "append()",
+                            "addToEnd()",
+                            "insertEnd()"
+                        ],
+                        correct: 0,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "In React, what Hook is used to manage state in functional components?",
+                        options: [
+                            "useState",
+                            "useEffect",
+                            "useContext",
+                            "useReducer"
+                        ],
+                        correct: 0,
+                        difficulty: "advanced"
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Python Programming for Beginners",
+                description: "Master Python from scratch. Learn variables, loops, functions, and build your first applications.",
+                icon: "fas fa-python",
+                color: "linear-gradient(135deg, #FF6B8B 0%, #FFD166 100%)",
+                basics: [
+                    "Python is an interpreted, high-level programming language.",
+                    "Python was created by Guido van Rossum and first released in 1991.",
+                    "Python emphasizes code readability with its notable use of significant whitespace.",
+                    "Python's design philosophy emphasizes code readability.",
+                    "Python uses indentation to define code blocks.",
+                    "Python supports multiple programming paradigms.",
+                    "Python has a large and comprehensive standard library.",
+                    "Python is dynamically typed and garbage-collected.",
+                    "Python is often described as a 'batteries included' language.",
+                    "Python's simple syntax is easy to learn for beginners.",
+                    "Variables in Python are created when you assign a value to them.",
+                    "Python has no command for declaring a variable.",
+                    "Variable names are case-sensitive in Python.",
+                    "Python supports various data types out of the box.",
+                    "Strings in Python can be enclosed in single or double quotes.",
+                    "Lists are used to store multiple items in a single variable.",
+                    "Tuples are like lists but immutable.",
+                    "Dictionaries store data in key-value pairs.",
+                    "Sets are unordered collections of unique elements.",
+                    "Python uses if, elif, and else for conditional statements."
+                ],
+                medium: [
+                    "Functions in Python are defined using the def keyword.",
+                    "Functions can return values using the return statement.",
+                    "Lambda functions are small anonymous functions.",
+                    "List comprehensions provide a concise way to create lists.",
+                    "Python supports object-oriented programming.",
+                    "Classes are blueprints for creating objects in Python.",
+                    "Objects are instances of classes.",
+                    "Inheritance allows one class to derive from another.",
+                    "Polymorphism allows methods to do different things based on the object.",
+                    "Encapsulation restricts direct access to some of an object's components.",
+                    "Modules are files containing Python code.",
+                    "Packages are collections of modules.",
+                    "The import statement is used to import modules.",
+                    "Python has built-in modules like math, datetime, and os.",
+                    "File handling allows Python to read from and write to files.",
+                    "Exception handling prevents programs from crashing.",
+                    "Try, except, and finally blocks handle exceptions.",
+                    "The with statement simplifies exception handling.",
+                    "Generators are functions that return an iterator.",
+                    "Decorators modify the behavior of functions or classes.",
+                    "Context managers manage resources properly.",
+                    "Regular expressions are used for pattern matching.",
+                    "Python's re module provides regular expression operations.",
+                    "Virtual environments isolate project dependencies.",
+                    "Pip is Python's package installer.",
+                    "List, tuple, dictionary, and set comprehensions create collections.",
+                    "The zip() function combines multiple iterables.",
+                    "The map() function applies a function to all items in an input list.",
+                    "The filter() function creates a list of elements for which a function returns true.",
+                    "The reduce() function applies a rolling computation to sequential pairs."
+                ],
+                advanced: [
+                    "NumPy is a library for numerical computing in Python.",
+                    "Pandas provides data structures for data manipulation and analysis.",
+                    "Matplotlib is a plotting library for creating static, animated, and interactive visualizations.",
+                    "Scikit-learn is a machine learning library for Python.",
+                    "TensorFlow is an open-source platform for machine learning.",
+                    "PyTorch is another popular machine learning framework.",
+                    "Django is a high-level Python web framework.",
+                    "Flask is a micro web framework for Python.",
+                    "FastAPI is a modern, fast web framework for building APIs.",
+                    "Asynchronous programming uses async and await keywords.",
+                    "Asyncio is a library for writing concurrent code using async/await.",
+                    "Multiprocessing allows running multiple processes simultaneously.",
+                    "Threading enables concurrent execution within a single process.",
+                    "The Global Interpreter Lock (GIL) prevents multiple threads from executing Python bytecodes at once.",
+                    "Metaclasses are classes of classes that define how a class behaves.",
+                    "Descriptors allow customized attribute access.",
+                    "Property decorators provide getter and setter functionality.",
+                    "Class methods are bound to the class and not the instance.",
+                    "Static methods don't receive an implicit first argument.",
+                    "Abstract base classes define a blueprint for other classes.",
+                    "Mixins are classes designed to be inherited but not instantiated.",
+                    "Type hints specify the expected data types of variables.",
+                    "MyPy is a static type checker for Python.",
+                    "Pytest is a testing framework for Python.",
+                    "Unittest is Python's built-in testing framework.",
+                    "Mock objects simulate the behavior of real objects in tests.",
+                    "Code coverage measures how much code is executed during testing.",
+                    "Continuous integration automates testing and building.",
+                    "Docker containers package Python applications with dependencies.",
+                    "Kubernetes orchestrates containerized applications.",
+                    "APIs allow different software applications to communicate.",
+                    "RESTful APIs use HTTP requests to perform CRUD operations.",
+                    "GraphQL provides a more efficient alternative to REST.",
+                    "Web scraping extracts data from websites.",
+                    "Beautiful Soup is a library for pulling data out of HTML and XML files.",
+                    "Scrapy is an open-source web crawling framework.",
+                    "Data analysis involves inspecting, cleaning, and modeling data.",
+                    "Data visualization represents data in graphical form.",
+                    "Machine learning algorithms learn patterns from data.",
+                    "Deep learning uses neural networks with many layers.",
+                    "Natural Language Processing (NLP) deals with human language data.",
+                    "Computer vision enables computers to derive information from images.",
+                    "Big Data technologies handle large volumes of data.",
+                    "Apache Spark is a unified analytics engine for large-scale data processing.",
+                    "Cloud platforms like AWS, GCP, and Azure host Python applications.",
+                    "Serverless computing runs code without provisioning servers.",
+                    "Microservices architecture structures applications as loosely coupled services.",
+                    "Monolithic architecture builds applications as a single unit."
+                ],
+                quiz: [
+                    {
+                        question: "Which keyword is used to define a function in Python?",
+                        options: ["function", "def", "func", "define"],
+                        correct: 1,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "Which of these is NOT a built-in data type in Python?",
+                        options: ["list", "tuple", "array", "dictionary"],
+                        correct: 2,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "What does the 'self' parameter represent in Python class methods?",
+                        options: [
+                            "The class itself",
+                            "The instance of the class",
+                            "A reference to the parent class",
+                            "A static method parameter"
+                        ],
+                        correct: 1,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "Which library is commonly used for data manipulation and analysis in Python?",
+                        options: ["NumPy", "Pandas", "Matplotlib", "SciPy"],
+                        correct: 1,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "What is the Global Interpreter Lock (GIL) in Python?",
+                        options: [
+                            "A mechanism that prevents multiple threads from executing Python bytecodes at once",
+                            "A security feature that locks the interpreter",
+                            "A tool for managing memory allocation",
+                            "A debugger for multi-threaded applications"
+                        ],
+                        correct: 0,
+                        difficulty: "advanced"
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Mobile App Development with Flutter",
+                description: "Build beautiful, natively compiled applications for mobile, web, and desktop from a single codebase.",
+                icon: "fas fa-mobile-alt",
+                color: "linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%)",
+                basics: [
+                    "Flutter is Google's UI toolkit for building natively compiled applications.",
+                    "Flutter apps are written in the Dart programming language.",
+                    "Flutter uses a reactive programming model.",
+                    "Everything in Flutter is a widget.",
+                    "Widgets are the basic building blocks of a Flutter app.",
+                    "Flutter provides a rich set of Material Design and Cupertino widgets.",
+                    "Hot Reload allows instant viewing of code changes.",
+                    "Flutter compiles to native ARM code for iOS and Android.",
+                    "Flutter uses the Skia graphics engine.",
+                    "Dart is an object-oriented language with C-style syntax.",
+                    "Dart supports both just-in-time and ahead-of-time compilation.",
+                    "The main() function is the entry point for Flutter apps.",
+                    "runApp() function takes a widget and makes it the root of the widget tree.",
+                    "StatelessWidget describes part of the UI which depends on configuration information.",
+                    "StatefulWidget has mutable state that might change during the lifetime of the widget.",
+                    "setState() notifies the framework that the state has changed.",
+                    "BuildContext handles the location of a widget in the widget tree.",
+                    "MaterialApp is a convenience widget that wraps several widgets.",
+                    "Scaffold provides a framework for implementing Material Design layouts.",
+                    "Container is a convenience widget that combines common painting, positioning, and sizing."
+                ],
+                medium: [
+                    "The widget tree represents the UI hierarchy.",
+                    "The element tree represents the instantiated widgets.",
+                    "The render tree handles layout and painting.",
+                    "Keys preserve state when widgets move around in the widget tree.",
+                    "GlobalKey can be used to identify widgets across the entire app.",
+                    "LocalKey identifies widgets among siblings.",
+                    "ListView displays a scrollable list of children widgets.",
+                    "GridView displays a scrollable grid of children widgets.",
+                    "Stack positions children relative to the edges of its box.",
+                    "Positioned controls where a child of a Stack is positioned.",
+                    "Flex and Expanded control how children of Row and Column are sized.",
+                    "MediaQuery provides information about the current device.",
+                    "ThemeData defines the colors and typography for Material Design.",
+                    "Navigator manages a stack of routes.",
+                    "Routes represent screens or pages in the app.",
+                    "Named routes allow navigation using route names.",
+                    "MaterialPageRoute creates a modal route that replaces the entire screen.",
+                    "CupertinoPageRoute creates an iOS-style page transition.",
+                    "AnimationController controls animation playback.",
+                    "Tween interpolates between a beginning and ending value.",
+                    "AnimationBuilder rebuilds itself when the animation changes value.",
+                    "Future represents a potential value or error that will be available later.",
+                    "Async/await simplifies asynchronous programming in Dart.",
+                    "Stream provides asynchronous sequences of data.",
+                    "StreamBuilder rebuilds itself when the stream emits new data.",
+                    "State management approaches include setState, InheritedWidget, Provider, and BLoC.",
+                    "Provider is a wrapper around InheritedWidget for state management.",
+                    "BLoC (Business Logic Component) separates business logic from presentation.",
+                    "Riverpod is a reactive caching and data-binding framework.",
+                    "GetX is an extra-light and powerful solution for state management."
+                ],
+                advanced: [
+                    "Platform channels allow Flutter to communicate with platform-specific code.",
+                    "MethodChannel enables invoking platform-specific methods.",
+                    "EventChannel allows listening to platform events.",
+                    "Flutter plugins wrap platform-specific functionality.",
+                    "Package development creates reusable Flutter components.",
+                    "Flutter supports custom platform views for embedding native UI components.",
+                    "Flutter web compiles Dart to JavaScript.",
+                    "Flutter desktop supports Windows, macOS, and Linux.",
+                    "Flutter's rendering pipeline includes build, layout, paint, and composite phases.",
+                    "The WidgetsBindingObserver interface observes application lifecycle events.",
+                    "Isolates enable concurrent programming in Dart.",
+                    "Compute() function runs expensive computations in a separate isolate.",
+                    "Flutter's performance profiling tools include the Performance Overlay and Timeline.",
+                    "DevTools provides a suite of debugging and performance tools.",
+                    "Flutter's testing framework supports unit, widget, and integration tests.",
+                    "Mockito creates mock objects for testing.",
+                    "Golden tests compare widget renderings with reference images.",
+                    "Continuous integration for Flutter can be set up with GitHub Actions or Codemagic.",
+                    "Flutter supports internationalization and localization.",
+                    "Flutter's accessibility features include semantic labeling and navigation.",
+                    "CustomPaint allows drawing custom graphics on the screen.",
+                    "Canvas provides methods for drawing shapes and paths.",
+                    "CustomClipper creates custom shapes for clipping widgets.",
+                    "ShaderMask applies shaders to widget children.",
+                    "Hero animations create seamless transitions between screens.",
+                    "PageRouteBuilder creates custom page transitions.",
+                    "Flutter's gesture system recognizes taps, drags, and scales.",
+                    "RawGestureDetector creates custom gesture recognizers.",
+                    "Flutter's painting library provides primitives for drawing on a canvas.",
+                    "Flutter's animation library includes physics-based animations.",
+                    "Flutter supports Firebase integration for backend services.",
+                    "Cloud Firestore provides a flexible, scalable NoSQL cloud database.",
+                    "Firebase Authentication handles user authentication.",
+                    "Cloud Functions for Firebase run backend code in response to events.",
+                    "Flutter supports REST API integration with packages like Dio and http.",
+                    "GraphQL clients like Ferry and GraphQL Flutter integrate with GraphQL APIs.",
+                    "State restoration preserves and restores state across app restarts.",
+                    "Flutter's platform-specific adaptives adjust UI based on the platform.",
+                    "Flutter for web supports progressive web app (PWA) features.",
+                    "Flutter desktop apps can integrate with native platform menus and dialogs.",
+                    "Flutter's embedding API allows integrating Flutter into existing native apps.",
+                    "Flutter modules can be added to existing iOS and Android apps.",
+                    "Flutter's code generation reduces boilerplate with packages like json_serializable and freezed.",
+                    "Flutter's linting and formatting ensure code quality with packages like flutter_lints.",
+                    "Continuous deployment for Flutter automates building and releasing apps.",
+                    "App signing and distribution prepare apps for app stores.",
+                    "Flutter's adaptive design patterns ensure apps work on different screen sizes.",
+                    "Flutter's theming system supports light and dark modes."
+                ],
+                quiz: [
+                    {
+                        question: "Which programming language is used for Flutter development?",
+                        options: ["JavaScript", "Dart", "Kotlin", "Swift"],
+                        correct: 1,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "What function is the entry point for a Flutter application?",
+                        options: ["initApp()", "main()", "runApp()", "startApp()"],
+                        correct: 1,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "What is the purpose of the setState() method in Flutter?",
+                        options: [
+                            "To change the application state",
+                            "To notify the framework that the internal state has changed",
+                            "To save the current state to disk",
+                            "To reset the widget tree"
+                        ],
+                        correct: 1,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "Which widget would you use to display a scrollable list of items?",
+                        options: ["Column", "Row", "ListView", "Stack"],
+                        correct: 2,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "What do Platform Channels in Flutter enable?",
+                        options: [
+                            "Communication between Flutter and platform-specific code",
+                            "Switching between light and dark themes",
+                            "Loading platform-specific fonts",
+                            "Handling different screen sizes"
+                        ],
+                        correct: 0,
+                        difficulty: "advanced"
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Data Science with Python",
+                description: "Learn data analysis, visualization, and machine learning using Python's powerful data science libraries.",
+                icon: "fas fa-chart-line",
+                color: "linear-gradient(135deg, #9D50BB 0%, #6E48AA 100%)",
+                basics: [
+                    "Data science is a multidisciplinary field that uses scientific methods to extract insights from data.",
+                    "Python is a popular language for data science due to its rich ecosystem of libraries.",
+                    "Jupyter Notebook is an interactive computing environment for data science.",
+                    "NumPy provides support for large, multi-dimensional arrays and matrices.",
+                    "Pandas offers data structures and operations for manipulating numerical tables and time series.",
+                    "Matplotlib is a plotting library for creating static, animated, and interactive visualizations.",
+                    "Seaborn is a statistical data visualization library based on Matplotlib.",
+                    "Data cleaning involves handling missing values, outliers, and inconsistencies.",
+                    "Exploratory Data Analysis (EDA) summarizes main characteristics of data often with visual methods.",
+                    "Descriptive statistics summarize and describe the features of a dataset.",
+                    "Inferential statistics make predictions or inferences about a population based on a sample.",
+                    "Probability theory quantifies the likelihood of events occurring.",
+                    "Random variables assign numerical values to outcomes of random phenomena.",
+                    "Probability distributions describe the likelihood of different outcomes.",
+                    "Normal distribution is a continuous probability distribution that is symmetric about the mean.",
+                    "Correlation measures the strength and direction of a linear relationship between two variables.",
+                    "Causation implies that one event is the result of the occurrence of the other event.",
+                    "Hypothesis testing evaluates two mutually exclusive statements about a population.",
+                    "P-value measures the strength of evidence against the null hypothesis.",
+                    "Confidence intervals provide a range of values likely to contain the population parameter."
+                ],
+                medium: [
+                    "Machine learning is a subset of artificial intelligence that enables systems to learn from data.",
+                    "Supervised learning uses labeled data to train models.",
+                    "Unsupervised learning finds patterns in unlabeled data.",
+                    "Reinforcement learning learns through trial and error using rewards and penalties.",
+                    "Classification predicts categorical class labels.",
+                    "Regression predicts continuous numerical values.",
+                    "Clustering groups similar data points together.",
+                    "Dimensionality reduction reduces the number of random variables under consideration.",
+                    "Feature engineering creates new features from existing data to improve model performance.",
+                    "Feature selection chooses the most relevant features for model training.",
+                    "Train-test split divides data into training and testing sets.",
+                    "Cross-validation assesses how the results of a statistical analysis will generalize to an independent dataset.",
+                    "Overfitting occurs when a model learns the training data too well, including noise.",
+                    "Underfitting occurs when a model is too simple to capture the underlying pattern.",
+                    "Bias is the error from erroneous assumptions in the learning algorithm.",
+                    "Variance is the error from sensitivity to small fluctuations in the training set.",
+                    "Bias-variance tradeoff balances model complexity to minimize total error.",
+                    "Linear regression models the relationship between variables by fitting a linear equation.",
+                    "Logistic regression predicts the probability of a binary outcome.",
+                    "Decision trees split data based on feature values to make predictions.",
+                    "Random forests combine multiple decision trees to improve prediction accuracy.",
+                    "Support Vector Machines find the optimal hyperplane that separates classes.",
+                    "K-Nearest Neighbors classifies data based on the majority class of its k nearest neighbors.",
+                    "K-Means clustering partitions data into k clusters based on similarity.",
+                    "Principal Component Analysis reduces dimensionality while preserving variance.",
+                    "Natural Language Processing enables computers to understand and process human language.",
+                    "Text preprocessing includes tokenization, stopword removal, and stemming.",
+                    "Bag of Words represents text as a collection of words ignoring grammar and word order.",
+                    "TF-IDF evaluates how important a word is to a document in a collection.",
+                    "Word embeddings represent words as dense vectors in a continuous vector space."
+                ],
+                advanced: [
+                    "Deep learning uses neural networks with multiple layers to learn representations of data.",
+                    "Neural networks are inspired by the structure and function of the human brain.",
+                    "Artificial neurons receive inputs, apply weights and biases, and pass through an activation function.",
+                    "Activation functions introduce non-linearity into neural networks.",
+                    "Backpropagation calculates gradients of the loss function with respect to each weight.",
+                    "Gradient descent optimizes model parameters by iteratively moving toward the minimum of the loss function.",
+                    "Convolutional Neural Networks are specialized for processing grid-like data such as images.",
+                    "Recurrent Neural Networks handle sequential data by maintaining internal memory.",
+                    "Long Short-Term Memory networks address the vanishing gradient problem in RNNs.",
+                    "Transformer architecture uses self-attention mechanisms for sequence processing.",
+                    "BERT is a transformer-based model for natural language understanding.",
+                    "GPT models are transformer-based models for natural language generation.",
+                    "Transfer learning leverages pre-trained models for new tasks with limited data.",
+                    "Generative Adversarial Networks consist of generator and discriminator networks that compete.",
+                    "Autoencoders learn efficient representations of data through unsupervised learning.",
+                    "Reinforcement learning algorithms include Q-learning, Policy Gradients, and Deep Q-Networks.",
+                    "Hyperparameter tuning optimizes model parameters that are not learned during training.",
+                    "Grid search exhaustively searches through a specified subset of hyperparameters.",
+                    "Random search samples hyperparameter combinations from specified distributions.",
+                    "Bayesian optimization builds a probabilistic model of the objective function.",
+                    "Ensemble methods combine multiple models to improve predictive performance.",
+                    "Bagging reduces variance by training multiple models on different subsets of data.",
+                    "Boosting converts weak learners into strong learners by focusing on misclassified instances.",
+                    "Stacking combines predictions from multiple models using a meta-model.",
+                    "Time series analysis models data points indexed in time order.",
+                    "ARIMA models capture temporal structures in time series data.",
+                    "Prophet is a forecasting procedure for time series with seasonal patterns.",
+                    "Anomaly detection identifies rare items, events, or observations that differ significantly.",
+                    "Recommender systems predict user preferences for items.",
+                    "Collaborative filtering makes recommendations based on user behavior patterns.",
+                    "Content-based filtering recommends items similar to those a user liked in the past.",
+                    "Big data technologies handle datasets that are too large for traditional processing.",
+                    "Apache Spark provides a unified analytics engine for large-scale data processing.",
+                    "Hadoop enables distributed processing of large datasets across clusters of computers.",
+                    "Data lakes store vast amounts of raw data in its native format.",
+                    "Data warehouses store structured, filtered data that has been processed for a specific purpose.",
+                    "ETL processes extract, transform, and load data from various sources.",
+                    "Data pipelines automate the flow of data from source to destination.",
+                    "MLOps combines machine learning with DevOps practices for production ML systems.",
+                    "Model deployment serves machine learning models to end-users or systems.",
+                    "Model monitoring tracks model performance and data drift in production.",
+                    "Explainable AI provides insights into how models make predictions.",
+                    "SHAP values explain the output of any machine learning model.",
+                    "LIME creates locally faithful explanations for individual predictions.",
+                    "Ethical considerations in data science include fairness, accountability, and transparency.",
+                    "Fairness metrics detect and mitigate bias in machine learning models.",
+                    "Privacy-preserving techniques protect sensitive data during analysis.",
+                    "Differential privacy adds noise to query results to protect individual privacy."
+                ],
+                quiz: [
+                    {
+                        question: "Which Python library is primarily used for data manipulation and analysis?",
+                        options: ["NumPy", "Pandas", "Matplotlib", "Scikit-learn"],
+                        correct: 1,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "What is the purpose of train-test split in machine learning?",
+                        options: [
+                            "To divide data into training and testing sets",
+                            "To separate features from labels",
+                            "To normalize the data",
+                            "To remove outliers from the data"
+                        ],
+                        correct: 0,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "What does the term 'overfitting' mean in machine learning?",
+                        options: [
+                            "A model that performs well on training data but poorly on unseen data",
+                            "A model that performs poorly on both training and test data",
+                            "A model that has too few parameters",
+                            "A model that is trained for too few epochs"
+                        ],
+                        correct: 0,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "Which technique is NOT a dimensionality reduction method?",
+                        options: ["PCA", "t-SNE", "Random Forest", "Autoencoders"],
+                        correct: 2,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "What is the purpose of the attention mechanism in transformer models?",
+                        options: [
+                            "To weigh the importance of different parts of the input sequence",
+                            "To increase the model's parameter count",
+                            "To reduce training time",
+                            "To prevent overfitting"
+                        ],
+                        correct: 0,
+                        difficulty: "advanced"
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Cybersecurity Fundamentals",
+                description: "Learn essential cybersecurity concepts, threats, and defense mechanisms to protect digital assets.",
+                icon: "fas fa-shield-alt",
+                color: "linear-gradient(135deg, #FF9A9E 0%, #FAD0C4 100%)",
+                basics: [
+                    "Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks.",
+                    "The CIA triad represents confidentiality, integrity, and availability.",
+                    "Confidentiality ensures that information is not disclosed to unauthorized individuals.",
+                    "Integrity maintains the accuracy and completeness of data.",
+                    "Availability ensures that information is accessible to authorized users when needed.",
+                    "Authentication verifies the identity of a user, process, or device.",
+                    "Authorization determines what an authenticated user is allowed to do.",
+                    "Accounting tracks user activities for security and compliance purposes.",
+                    "Vulnerability is a weakness in a system that could be exploited by a threat.",
+                    "Threat is any circumstance or event with the potential to cause harm to a system.",
+                    "Risk is the potential for loss or damage when a threat exploits a vulnerability.",
+                    "Attack vector is a path or means by which an attacker can gain access to a system.",
+                    "Malware is malicious software designed to harm or exploit systems.",
+                    "Virus is a type of malware that replicates itself by modifying other programs.",
+                    "Worm is a standalone malware that replicates itself to spread to other computers.",
+                    "Trojan horse is malware disguised as legitimate software.",
+                    "Ransomware encrypts files and demands payment for decryption.",
+                    "Spyware collects information about users without their knowledge.",
+                    "Adware displays unwanted advertisements to users.",
+                    "Firewall monitors and controls incoming and outgoing network traffic."
+                ],
+                medium: [
+                    "Encryption transforms data into a format that cannot be easily understood by unauthorized people.",
+                    "Symmetric encryption uses the same key for encryption and decryption.",
+                    "Asymmetric encryption uses a pair of keys: public and private.",
+                    "Public key is shared openly, while private key is kept secret.",
+                    "Digital signature verifies the authenticity and integrity of a message.",
+                    "Hash function converts data into a fixed-size string of characters.",
+                    "Digital certificate binds a public key to an identity.",
+                    "SSL/TLS provides secure communication over a computer network.",
+                    "VPN creates a secure connection over a public network.",
+                    "IDS monitors network traffic for suspicious activity.",
+                    "IPS actively prevents or blocks intrusions that are detected.",
+                    "SIEM provides real-time analysis of security alerts from network devices.",
+                    "Penetration testing simulates cyber attacks to identify vulnerabilities.",
+                    "Vulnerability scanning identifies known vulnerabilities in systems.",
+                    "Social engineering manipulates people into revealing confidential information.",
+                    "Phishing uses fraudulent communications to trick recipients into revealing sensitive information.",
+                    "Spear phishing targets specific individuals or organizations.",
+                    "Whaling targets high-profile individuals like executives.",
+                    "Man-in-the-middle attack intercepts communication between two parties.",
+                    "DDoS attack overwhelms a system with traffic to disrupt service.",
+                    "SQL injection inserts malicious SQL code into database queries.",
+                    "Cross-site scripting injects malicious scripts into web pages viewed by users.",
+                    "Zero-day vulnerability is unknown to those interested in mitigating it.",
+                    "Patch management applies updates to fix vulnerabilities.",
+                    "Access control limits access to systems and data.",
+                    "Role-based access control grants permissions based on user roles.",
+                    "Multi-factor authentication requires multiple forms of verification.",
+                    "Biometric authentication uses unique biological characteristics.",
+                    "Incident response handles security breaches and cyber attacks.",
+                    "Disaster recovery restores operations after a disruptive event."
+                ],
+                advanced: [
+                    "Cryptography algorithms include AES, RSA, SHA, and ECC.",
+                    "AES is a symmetric encryption algorithm widely used worldwide.",
+                    "RSA is an asymmetric encryption algorithm based on prime factorization.",
+                    "ECC provides equivalent security to RSA with smaller key sizes.",
+                    "Quantum cryptography uses quantum mechanics to secure communication.",
+                    "Post-quantum cryptography develops algorithms secure against quantum computers.",
+                    "Blockchain is a decentralized, distributed ledger technology.",
+                    "Smart contracts are self-executing contracts with terms written in code.",
+                    "Zero-knowledge proofs verify information without revealing the information itself.",
+                    "Homomorphic encryption allows computations on encrypted data.",
+                    "Threat intelligence analyzes information about potential or current threats.",
+                    "Threat hunting proactively searches for threats that evade existing security controls.",
+                    "Deception technology uses decoys to detect and study attackers.",
+                    "Honeypots are decoy systems designed to attract attackers.",
+                    "Endpoint detection and response monitors endpoints for malicious activity.",
+                    "Extended detection and response integrates multiple security products.",
+                    "Cloud security protects data, applications, and infrastructure in cloud environments.",
+                    "Container security protects containerized applications and their infrastructure.",
+                    "DevSecOps integrates security practices into the DevOps process.",
+                    "Security orchestration, automation, and response coordinates security tools and automates responses.",
+                    "MITRE ATT&CK framework documents adversary tactics and techniques.",
+                    "NIST Cybersecurity Framework provides guidelines for improving cybersecurity.",
+                    "ISO 27001 specifies requirements for an information security management system.",
+                    "GDPR regulates data protection and privacy in the European Union.",
+                    "HIPAA sets standards for protecting sensitive patient data.",
+                    "Digital forensics investigates digital devices and data for legal evidence.",
+                    "Memory forensics analyzes volatile memory for forensic artifacts.",
+                    "Network forensics monitors and analyzes network traffic for information gathering.",
+                    "Malware analysis studies malware to understand its functionality and origin.",
+                    "Static analysis examines malware without executing it.",
+                    "Dynamic analysis runs malware in a controlled environment to observe behavior.",
+                    "Reverse engineering analyzes software to understand its design and functionality.",
+                    "Exploit development creates code to take advantage of software vulnerabilities.",
+                    "Fuzzing provides invalid or random data as inputs to a program to find vulnerabilities.",
+                    "Binary exploitation exploits vulnerabilities in compiled programs.",
+                    "Web application security protects web applications from various attacks.",
+                    "Mobile security protects mobile devices and applications.",
+                    "IoT security secures internet-connected devices and networks.",
+                    "Industrial control system security protects critical infrastructure systems.",
+                    "Supply chain security ensures the integrity of products throughout the supply chain.",
+                    "Red team simulates adversary attacks to test security defenses.",
+                    "Blue team defends against attacks and responds to incidents.",
+                    "Purple team combines red and blue team activities for improved security.",
+                    "Bug bounty programs reward individuals for discovering and reporting vulnerabilities.",
+                    "Security awareness training educates employees about security risks and best practices.",
+                    "Risk management identifies, assesses, and prioritizes security risks.",
+                    "Business continuity planning ensures essential functions continue during and after a disaster.",
+                    "Governance, risk, and compliance aligns security activities with business objectives."
+                ],
+                quiz: [
+                    {
+                        question: "What does the 'C' in the CIA triad stand for?",
+                        options: ["Confidentiality", "Control", "Compliance", "Certificate"],
+                        correct: 0,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "Which type of malware replicates itself without user intervention?",
+                        options: ["Virus", "Worm", "Trojan", "Ransomware"],
+                        correct: 1,
+                        difficulty: "basic"
+                    },
+                    {
+                        question: "What is the main purpose of a firewall?",
+                        options: [
+                            "To monitor and control network traffic",
+                            "To encrypt data",
+                            "To detect viruses",
+                            "To authenticate users"
+                        ],
+                        correct: 0,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "Which attack involves intercepting communication between two parties?",
+                        options: [
+                            "Phishing",
+                            "Man-in-the-middle",
+                            "SQL injection",
+                            "DDoS"
+                        ],
+                        correct: 1,
+                        difficulty: "medium"
+                    },
+                    {
+                        question: "What does EDR stand for in cybersecurity?",
+                        options: [
+                            "Endpoint Detection and Response",
+                            "Extended Data Recovery",
+                            "Encrypted Data Retrieval",
+                            "Enterprise Defense Resolution"
+                        ],
+                        correct: 0,
+                        difficulty: "advanced"
+                    }
+                ]
+            }
+        ];
+
+        // Application State
+        let currentUser = null;
+        let registeredCourses = [];
+        let completedCourses = [];
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let currentCourseId = null;
+        let isDarkTheme = localStorage.getItem('darkTheme') === 'true';
+
+        // DOM Elements
+        const themeToggle = document.getElementById('themeToggle');
+        const registrationModal = document.getElementById('registrationModal');
+        const loginBtn = document.getElementById('loginBtn');
+        const closeModalBtn = document.getElementById('closeModal');
+        const signupForm = document.getElementById('signupForm');
+        const loginForm = document.getElementById('loginForm');
+        const loginFormSubmit = document.getElementById('loginFormSubmit');
+        const switchToLogin = document.getElementById('switchToLogin');
+        const switchToSignup = document.getElementById('switchToSignup');
+        const continueAsGuest = document.getElementById('continueAsGuest');
+        const continueAsGuest2 = document.getElementById('continueAsGuest2');
+        const navLinks = document.querySelectorAll('.nav-links a');
+        const pageContents = document.querySelectorAll('.page-content');
+        const coursesList = document.getElementById('coursesList');
+        const courseDetailsModal = document.getElementById('courseDetailsModal');
+        const closeDetailsModal = document.getElementById('closeDetailsModal');
+        const courseDetailsContent = document.getElementById('courseDetailsContent');
+        const courseLearningModal = document.getElementById('courseLearningModal');
+        const closeCourseModal = document.getElementById('closeCourseModal');
+        const courseLearningTitle = document.getElementById('courseLearningTitle');
+        const courseLearningContent = document.getElementById('courseLearningContent');
+        const editProfileModal = document.getElementById('editProfileModal');
+        const closeEditModal = document.getElementById('closeEditModal');
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        const editProfileForm = document.getElementById('editProfileForm');
+        const profileInfo = document.getElementById('profileInfo');
+        const registeredCoursesList = document.getElementById('registeredCourses');
+        const completedCoursesList = document.getElementById('completedCourses');
+        const userWelcome = document.getElementById('userWelcome');
+        const userName = document.getElementById('userName');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const openRegistrationBtn = document.getElementById('openRegistration');
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply theme
+            if (isDarkTheme) {
+                document.body.classList.add('dark-theme');
+            }
+            
+            // Load user data if logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                registeredCourses = JSON.parse(localStorage.getItem(`registeredCourses_${currentUser.username}`)) || [];
+                completedCourses = JSON.parse(localStorage.getItem(`completedCourses_${currentUser.username}`)) || [];
+                updateUserUI();
+            }
+            
+            // Load courses
+            loadCourses();
+            
+            // Make sure modals are scrollable
+            const modals = document.querySelectorAll('.modal-content');
+            modals.forEach(modal => {
+                modal.style.overflowY = 'auto';
+                modal.style.maxHeight = '90vh';
+            });
+        });
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', function() {
+            isDarkTheme = !isDarkTheme;
+            document.body.classList.toggle('dark-theme', isDarkTheme);
+            localStorage.setItem('darkTheme', isDarkTheme);
+        });
+
+        // Update User UI
+        function updateUserUI() {
+            if (currentUser && !currentUser.isGuest) {
+                userWelcome.style.display = 'flex';
+                userName.textContent = currentUser.fullName;
+                loginBtn.style.display = 'none';
+            } else {
+                userWelcome.style.display = 'none';
+                loginBtn.style.display = 'block';
+            }
+        }
+
+        // Navigation
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = this.getAttribute('data-page');
+                
+                // Update active link
+                navLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show selected page
+                pageContents.forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                document.getElementById(`${page}-content`).style.display = 'block';
+                
+                // Load content for specific pages
+                if (page === 'courses') {
+                    loadCourses();
+                } else if (page === 'personal') {
+                    loadPersonalDashboard();
+                }
+            });
+        });
+
+        // Login/Signup Button
+        loginBtn.addEventListener('click', function() {
+            registrationModal.style.display = 'flex';
+            document.getElementById('registrationForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+        });
+
+        // Registration from home page
+        openRegistrationBtn.addEventListener('click', function() {
+            registrationModal.style.display = 'flex';
+        });
+
+        // Modal close
+        closeModalBtn.addEventListener('click', function() {
+            registrationModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === registrationModal) {
+                registrationModal.style.display = 'none';
+            }
+            if (event.target === courseDetailsModal) {
+                courseDetailsModal.style.display = 'none';
+            }
+            if (event.target === editProfileModal) {
+                editProfileModal.style.display = 'none';
+            }
+        });
+
+        // Switch between Signup and Login forms
+        switchToLogin.addEventListener('click', function() {
+            document.getElementById('registrationForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        });
+
+        switchToSignup.addEventListener('click', function() {
+            document.getElementById('registrationForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+        });
+
+        // Guest Access
+        continueAsGuest.addEventListener('click', function() {
+            registrationModal.style.display = 'none';
+            currentUser = {
+                username: 'guest',
+                fullName: 'Guest User',
+                isGuest: true
+            };
+            alert('You are now browsing as a guest. Register to save your progress!');
+            updateUserUI();
+        });
+
+        continueAsGuest2.addEventListener('click', function() {
+            registrationModal.style.display = 'none';
+            currentUser = {
+                username: 'guest',
+                fullName: 'Guest User',
+                isGuest: true
+            };
+            alert('You are now browsing as a guest. Register to save your progress!');
+            updateUserUI();
+        });
+
+        // Signup Form Submission
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const fullName = document.getElementById('fullName').value;
+            const dob = document.getElementById('dob').value;
+            const place = document.getElementById('place').value;
+            const courseName = document.getElementById('courseName').value;
+            const collegeName = document.getElementById('collegeName').value;
+            const interests = document.getElementById('interests').value;
+            
+            // Check if username already exists
+            if (users.some(user => user.username === username)) {
+                alert('Username already exists. Please choose a different username.');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                username,
+                password,
+                fullName,
+                dob,
+                place,
+                courseName,
+                collegeName,
+                interests,
+                registrationDate: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Set as current user
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Initialize empty course arrays for new user
+            localStorage.setItem(`registeredCourses_${username}`, JSON.stringify([]));
+            localStorage.setItem(`completedCourses_${username}`, JSON.stringify([]));
+            
+            registrationModal.style.display = 'none';
+            alert('Welcome to Code Craft Academy! Your account has been created.');
+            updateUserUI();
+            
+            // Clear form
+            signupForm.reset();
+            
+            // Load personal dashboard
+            loadPersonalDashboard();
+        });
+
+        // Login Form Submission
+        loginFormSubmit.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Load user's course data
+                registeredCourses = JSON.parse(localStorage.getItem(`registeredCourses_${username}`)) || [];
+                completedCourses = JSON.parse(localStorage.getItem(`completedCourses_${username}`)) || [];
+                
+                registrationModal.style.display = 'none';
+                alert('Welcome back!');
+                updateUserUI();
+                
+                // Clear form
+                loginFormSubmit.reset();
+                
+                // Load personal dashboard
+                loadPersonalDashboard();
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', function() {
+            currentUser = null;
+            registeredCourses = [];
+            completedCourses = [];
+            localStorage.removeItem('currentUser');
+            updateUserUI();
+            alert('You have been logged out successfully.');
+            
+            // Reload courses to update buttons
+            loadCourses();
+        });
+
+        // Load Courses
+        function loadCourses() {
+            coursesList.innerHTML = '';
+            
+            courses.forEach(course => {
+                const isRegistered = registeredCourses.some(c => c.id === course.id);
+                const isCompleted = completedCourses.some(c => c.id === course.id);
+                
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <div class="course-icon" style="background: ${course.color}">
+                        <i class="${course.icon}"></i>
+                    </div>
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <div class="course-actions">
+                        ${isCompleted ? 
+                            `<button class="action-btn" style="background: #4ECDC4; color: white;">
+                                <i class="fas fa-check-circle"></i> Completed
+                            </button>` : 
+                            isRegistered ? 
+                            `<button class="action-btn continue-btn" data-id="${course.id}">
+                                <i class="fas fa-play-circle"></i> Continue Learning
+                            </button>` :
+                            `<button class="action-btn register-btn" data-id="${course.id}">
+                                <i class="fas fa-user-plus"></i> Register Free
+                            </button>`
+                        }
+                        <button class="action-btn details-btn" data-id="${course.id}">
+                            <i class="fas fa-info-circle"></i> Details
+                        </button>
+                    </div>
+                `;
+                
+                coursesList.appendChild(courseCard);
+            });
+            
+            // Add event listeners to course buttons
+            document.querySelectorAll('.register-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const courseId = parseInt(this.getAttribute('data-id'));
+                    registerForCourse(courseId);
+                });
+            });
+            
+            document.querySelectorAll('.continue-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const courseId = parseInt(this.getAttribute('data-id'));
+                    openCourseLearning(courseId);
+                });
+            });
+            
+            document.querySelectorAll('.details-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const courseId = parseInt(this.getAttribute('data-id'));
+                    showCourseDetails(courseId);
+                });
+            });
+        }
+
+        // Register for a course
+        function registerForCourse(courseId) {
+            if (!currentUser || currentUser.isGuest) {
+                alert('Please register or login first to save your progress!');
+                registrationModal.style.display = 'flex';
+                return;
+            }
+            
+            const course = courses.find(c => c.id === courseId);
+            
+            if (!registeredCourses.some(c => c.id === courseId)) {
+                registeredCourses.push({
+                    id: course.id,
+                    title: course.title,
+                    registeredDate: new Date().toISOString(),
+                    progress: 0
+                });
+                
+                // Save to localStorage
+                localStorage.setItem(`registeredCourses_${currentUser.username}`, JSON.stringify(registeredCourses));
+                
+                alert(`🎉 Successfully registered for "${course.title}"! Start learning now.`);
+                loadCourses();
+                
+                // Update personal dashboard
+                loadPersonalDashboard();
+            }
+        }
+
+        // Show course details
+        function showCourseDetails(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            
+            courseDetailsContent.innerHTML = `
+                <h3 style="color: var(--primary); font-family: 'Montserrat', sans-serif;">${course.title}</h3>
+                <div class="course-details">
+                    <p style="font-size: 18px; line-height: 1.7; margin-bottom: 25px;">${course.description}</p>
+                    
+                    <h4 style="color: var(--primary); margin: 25px 0 15px;">📚 Course Content</h4>
+                    <ul style="color: var(--text-secondary); line-height: 1.8; margin-left: 20px; font-size: 16px;">
+                        <li><strong>Basics:</strong> ${course.basics.length} foundational concepts</li>
+                        <li><strong>Medium:</strong> ${course.medium.length} intermediate topics</li>
+                        <li><strong>Advanced:</strong> ${course.advanced.length} expert-level materials</li>
+                        <li><strong>Final Quiz:</strong> 5 questions to test your knowledge</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--primary); margin: 25px 0 15px;">🎯 What You'll Learn</h4>
+                    <ul style="color: var(--text-secondary); line-height: 1.8; margin-left: 20px; font-size: 16px;">
+                        ${course.basics.slice(0, 3).map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                    
+                    <h4 style="color: var(--primary); margin: 25px 0 15px;">✅ Requirements</h4>
+                    <ul style="color: var(--text-secondary); line-height: 1.8; margin-left: 20px; font-size: 16px;">
+                        <li>No prior experience required</li>
+                        <li>Basic computer literacy</li>
+                        <li>Internet connection</li>
+                        <li>Dedication to learn</li>
+                    </ul>
+                </div>
+            `;
+            
+            courseDetailsModal.style.display = 'flex';
+        }
+
+        closeDetailsModal.addEventListener('click', function() {
+            courseDetailsModal.style.display = 'none';
+        });
+
+        // Open course learning page
+        function openCourseLearning(courseId) {
+            currentCourseId = courseId;
+            const course = courses.find(c => c.id === courseId);
+            
+            courseLearningTitle.textContent = course.title;
+            
+            // Check if course is completed
+            const isCompleted = completedCourses.some(c => c.id === courseId);
+            
+            courseLearningContent.innerHTML = `
+                <div class="learning-sections">
+                    <div class="section-card basic">
+                        <h3><i class="fas fa-star"></i> Basics</h3>
+                        <div class="section-content">
+                            ${course.basics.map((item, index) => `<p>${index + 1}. ${item}</p>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="section-card medium">
+                        <h3><i class="fas fa-chart-line"></i> Medium</h3>
+                        <div class="section-content">
+                            ${course.medium.map((item, index) => `<p>${index + 1}. ${item}</p>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="section-card advanced">
+                        <h3><i class="fas fa-rocket"></i> Advanced</h3>
+                        <div class="section-content">
+                            ${course.advanced.map((item, index) => `<p>${index + 1}. ${item}</p>`).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quiz-container">
+                    <h3><i class="fas fa-question-circle"></i> Course Quiz</h3>
+                    <form id="quizForm">
+                        ${course.quiz.map((q, qIndex) => `
+                            <div class="question">
+                                <p>${qIndex + 1}. ${q.question}</p>
+                                ${q.options.map((option, oIndex) => `
+                                    <div class="option">
+                                        <label>
+                                            <input type="radio" name="question${qIndex}" value="${oIndex}">
+                                            ${option}
+                                        </label>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `).join('')}
+                        
+                        ${isCompleted ? 
+                            `<div style="text-align: center; padding: 30px; background-color: rgba(78, 205, 196, 0.1); border-radius: 20px; margin-top: 20px;">
+                                <i class="fas fa-check-circle" style="color: #4ECDC4; font-size: 64px; margin-bottom: 20px;"></i>
+                                <h3 style="color: #4ECDC4; font-family: 'Montserrat', sans-serif;">Course Already Completed!</h3>
+                                <p style="font-size: 18px; color: var(--text-secondary);">You have already completed this course and quiz.</p>
+                            </div>` :
+                            `<button type="submit" class="submit-quiz">Submit Quiz & Complete Course</button>`
+                        }
+                    </form>
+                </div>
+            `;
+            
+            courseLearningModal.style.display = 'block';
+            
+            // Add event listener for quiz submission
+            if (!isCompleted) {
+                const quizForm = document.getElementById('quizForm');
+                quizForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    submitQuiz(courseId);
+                });
+            }
+        }
+
+        closeCourseModal.addEventListener('click', function() {
+            courseLearningModal.style.display = 'none';
+        });
+
+        // Submit quiz
+        function submitQuiz(courseId) {
+            const course = courses.find(c => c.id === courseId);
+            let score = 0;
+            const totalQuestions = course.quiz.length;
+            
+            course.quiz.forEach((q, qIndex) => {
+                const selectedOption = document.querySelector(`input[name="question${qIndex}"]:checked`);
+                if (selectedOption && parseInt(selectedOption.value) === q.correct) {
+                    score++;
+                }
+            });
+            
+            if (score >= 3) { // Pass if at least 3 out of 5 correct
+                // Mark course as completed
+                if (!completedCourses.some(c => c.id === courseId)) {
+                    completedCourses.push({
+                        id: course.id,
+                        title: course.title,
+                        completedDate: new Date().toISOString(),
+                        score: score
+                    });
+                    
+                    // Remove from registered courses
+                    registeredCourses = registeredCourses.filter(c => c.id !== courseId);
+                    
+                    // Save to localStorage
+                    localStorage.setItem(`completedCourses_${currentUser.username}`, JSON.stringify(completedCourses));
+                    localStorage.setItem(`registeredCourses_${currentUser.username}`, JSON.stringify(registeredCourses));
+                    
+                    alert(`🎉 Congratulations! You passed the quiz with ${score}/${totalQuestions} correct answers. Course marked as completed!`);
+                }
+                
+                courseLearningModal.style.display = 'none';
+                
+                // Refresh courses and dashboard
+                loadCourses();
+                loadPersonalDashboard();
+            } else {
+                alert(`You scored ${score}/${totalQuestions}. You need at least 3 correct answers to pass. Please review the material and try again.`);
+            }
+        }
+
+        // Load Personal Dashboard
+        function loadPersonalDashboard() {
+            if (!currentUser || currentUser.isGuest) {
+                profileInfo.innerHTML = `
+                    <div style="text-align: center; padding: 40px; grid-column: 1 / -1;">
+                        <i class="fas fa-user-circle" style="font-size: 80px; color: var(--text-secondary); margin-bottom: 25px;"></i>
+                        <h3 style="color: var(--text-secondary); font-family: 'Montserrat', sans-serif; margin-bottom: 15px;">Guest User</h3>
+                        <p style="color: var(--text-secondary); font-size: 18px;">Register or login to access personal dashboard features and save your progress.</p>
+                        <button class="auth-btn" style="margin-top: 25px;" id="loginFromDashboard">Login / Signup</button>
+                    </div>
+                `;
+                
+                registeredCoursesList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <i class="fas fa-book" style="font-size: 80px; margin-bottom: 25px;"></i>
+                        <p style="font-size: 18px;">No courses registered yet. Register or login to enroll in courses.</p>
+                    </div>
+                `;
+                
+                completedCoursesList.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <i class="fas fa-trophy" style="font-size: 80px; margin-bottom: 25px;"></i>
+                        <p style="font-size: 18px;">Complete courses to see them here!</p>
+                    </div>
+                `;
+                
+                // Add event listener to login button
+                document.getElementById('loginFromDashboard')?.addEventListener('click', function() {
+                    registrationModal.style.display = 'flex';
+                });
+                
+                return;
+            }
+            
+            // Load profile info
+            profileInfo.innerHTML = `
+                <div class="info-item">
+                    <label>Full Name</label>
+                    <span>${currentUser.fullName}</span>
+                </div>
+                <div class="info-item">
+                    <label>Username</label>
+                    <span>${currentUser.username}</span>
+                </div>
+                <div class="info-item">
+                    <label>Date of Birth</label>
+                    <span>${currentUser.dob}</span>
+                </div>
+                <div class="info-item">
+                    <label>Place of Residence</label>
+                    <span>${currentUser.place}</span>
+                </div>
+                <div class="info-item">
+                    <label>Course Interest</label>
+                    <span>${currentUser.courseName}</span>
+                </div>
+                <div class="info-item">
+                    <label>College/University</label>
+                    <span>${currentUser.collegeName || 'Not specified'}</span>
+                </div>
+                <div class="info-item">
+                    <label>Areas of Interest</label>
+                    <span>${currentUser.interests || 'Not specified'}</span>
+                </div>
+                <div class="info-item">
+                    <label>Member Since</label>
+                    <span>${new Date(currentUser.registrationDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                </div>
+            `;
+            
+            // Load registered courses
+            registeredCoursesList.innerHTML = '';
+            if (registeredCourses.length === 0) {
+                registeredCoursesList.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: var(--text-secondary);">
+                        <i class="fas fa-search" style="font-size: 48px; margin-bottom: 15px;"></i>
+                        <p>No courses registered yet. Browse courses to get started!</p>
+                    </div>
+                `;
+            } else {
+                registeredCourses.forEach(course => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div>
+                            <strong>${course.title}</strong>
+                            <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
+                                <i class="far fa-calendar"></i> Registered on ${new Date(course.registeredDate).toLocaleDateString()}
+                            </div>
+                        </div>
+                        <button class="course-status registered" onclick="openCourseLearning(${course.id})" style="cursor: pointer; border: none; font-family: 'Montserrat', sans-serif;">
+                            <i class="fas fa-play"></i> Continue
+                        </button>
+                    `;
+                    registeredCoursesList.appendChild(li);
+                });
+            }
+            
+            // Load completed courses
+            completedCoursesList.innerHTML = '';
+            if (completedCourses.length === 0) {
+                completedCoursesList.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: var(--text-secondary);">
+                        <i class="fas fa-trophy" style="font-size: 48px; margin-bottom: 15px;"></i>
+                        <p>Complete your first course to see it here!</p>
+                    </div>
+                `;
+            } else {
+                completedCourses.forEach(course => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+                        <div>
+                            <strong>${course.title}</strong>
+                            <div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">
+                                <i class="far fa-calendar-check"></i> Completed on ${new Date(course.completedDate).toLocaleDateString()}
+                                <div style="margin-top: 5px;">
+                                    <i class="fas fa-star" style="color: #FFD166;"></i> Score: ${course.score}/5
+                                </div>
+                            </div>
+                        </div>
+                        <span class="course-status completed">
+                            <i class="fas fa-check"></i> Done
+                        </span>
+                    `;
+                    completedCoursesList.appendChild(li);
+                });
+            }
+        }
+
+        // Edit Profile
+        editProfileBtn.addEventListener('click', function() {
+            if (!currentUser || currentUser.isGuest) {
+                alert('Guest users cannot edit profile. Please register first.');
+                return;
+            }
+            
+            document.getElementById('editFullName').value = currentUser.fullName;
+            document.getElementById('editDob').value = currentUser.dob;
+            document.getElementById('editPlace').value = currentUser.place;
+            document.getElementById('editCollegeName').value = currentUser.collegeName || '';
+            document.getElementById('editInterests').value = currentUser.interests || '';
+            
+            editProfileModal.style.display = 'flex';
+        });
+
+        closeEditModal.addEventListener('click', function() {
+            editProfileModal.style.display = 'none';
+        });
+
+        editProfileForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            currentUser.fullName = document.getElementById('editFullName').value;
+            currentUser.dob = document.getElementById('editDob').value;
+            currentUser.place = document.getElementById('editPlace').value;
+            currentUser.collegeName = document.getElementById('editCollegeName').value;
+            currentUser.interests = document.getElementById('editInterests').value;
+            
+            // Update in users array
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            // Update current user in localStorage
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            editProfileModal.style.display = 'none';
+            alert('Profile updated successfully!');
+            
+            // Refresh dashboard
+            loadPersonalDashboard();
+            updateUserUI();
+        });
+
+        // Make openCourseLearning available globally for button clicks
+        window.openCourseLearning = openCourseLearning;
+    </script>
+</body>
+</html>
